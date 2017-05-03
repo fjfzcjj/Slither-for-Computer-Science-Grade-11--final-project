@@ -20,11 +20,11 @@ class core():
         self.gameAreaRadius = radius       # sort arguments
 
 
-        self.screen = turtle.screen()           # setup the screen and drawing turtle
+        self.screen = turtle.Screen()           # setup the screen and drawing turtle
         self.draw = turtle.Turtle()
         self.screen.tracer(0,0)
-        self.screen.setup(self.screensize[0] , self.screensiz[1] , 0 , 0 )
-        self.screen.bgColor(self.mapEdgeColor)
+        self.screen.setup(self.screensize[0] , self.screensize[1] , 0 , 0 )
+        self.screen.bgcolor(self.mapEdgeColor)
         self.screen.title = 'David\'s slither game'
         self.draw.ht()
 
