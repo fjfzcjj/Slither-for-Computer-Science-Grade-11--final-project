@@ -13,11 +13,19 @@ class core():
         self.currentScore = 0
 
     def __str__(self):
-        None
+        pass
 
-    def gameAreaMaker(self, radius = 500 , shape = 'circle'):
+    def gameAreaMaker(self, shape = input('Circle or square?\n'), dim = int(input('Dimension (radius or side length): \n')) ):
+        """This function draws the game area.
+Defined by user, the first input defines the shape of the game area,
+which is either a circle or a square.
+The second input defines the dimension of the game area, either the
+radius of the circle or the side length of the square.
+        """
+
+
         self.gameAreaShape = shape
-        self.gameAreaRadius = radius       # sort arguments
+        self.gameAreaDim = dim       # sort arguments
 
 
         self.screen = turtle.Screen()           # setup the screen and drawing turtle
@@ -28,14 +36,34 @@ class core():
         self.screen.title = 'David\'s slither game'
         self.draw.ht()
 
-        self.draw.penup()
-        self.draw.setposition(0,0)
-        self.draw.pencolor(self.edgeRed)
-        self.draw.pensize(1)
-        self.draw.color(self.gameAreaColor)
-        self.draw.begin_fill()
-        self.draw.circle(radius)              # draw a circle area with radius of 10000
-        self.draw.end_fill()
+        if self.gameAreaShape == 'circle':
+            self.draw.penup()
+            self.draw.setposition(0,-self.gameAreaDim)
+            self.draw.pencolor(self.edgeRed)
+            self.draw.pensize(1)
+            self.draw.color(self.gameAreaColor)
+            self.draw.begin_fill()
+            self.draw.circle(self.gameAreaDim)              # draw a circle area with radius
+            self.draw.end_fill()
+
+        else:
+            self.draw.penup()
+            self.draw.setposition(-1/2*self.gameAreaDim, -1/2*self.gameAreaDim)     #goes to the left bottom corner of the game area.
+            self.draw.setheading(0)
+            self.draw.pencolor(self.edgeRed)
+            self.draw.pensize(1)
+            self.draw.color(self.gameAreaColor)
+            self.draw.begin_fill()
+
+
+            self.draw.forward(self.gameAreaDim)
+            self.draw.setheading(90)
+            self.draw.forward(self.gameAreaDim)
+            self.draw.setheading(180)
+            self.draw.forward(self.gameAreaDim)          # draw a circle area with radius
+            self.draw.setheading(270)
+            self.draw.forward(self.gameAreaDim)
+            self.draw.end_fill()
 
 
     def colorGenrerator(self):
@@ -50,7 +78,7 @@ class core():
         pass
 
     def gameLoop(self):
-        gameAreaMaker()
+        self.gameAreaMaker()
 
 
 

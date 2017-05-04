@@ -12,4 +12,7 @@ screensize = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)
 zoomMode = [1]
 gameSpeeds = [1,1.5,2,4,8]
 
-core(screensize, gameSpeeds)
+print(core.gameAreaMaker.__doc__)
+game  = core(screensize, gameSpeeds)
+game.gameLoop()
+turtle.mainloop()
