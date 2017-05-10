@@ -3,18 +3,19 @@ import math, turtle, ctypes, random, timeit
 
 
 class core():
-    def __init__(self,screensize,gameSpeeds,gamePixelConstant = int(input('This Pixel CONSTANT will def how far each move is:'))):
+    def __init__(self,screensize,gameSpeeds,gamePixelConstant = float(input('This Pixel CONSTANT will def how far each move is:'))):
         self.screensize = screensize
         self.gameSpeeds = gameSpeeds
-        self.gameAreaColor = '#000000'   #black
-        self.slitherColor = '#00faff'   #aqua
-        self.miniMapColor = '#ffffff'   #white
-        self.mapEdgeColor = '#999999'   #gray
-        self.edgeRed = '#ef0000'        #edgeRed
+        self.gameAreaColor = '#000000'   # black
+        self.slitherColor = '#00faff'   # aqua
+        self.miniMapColor = '#ffffff'   # white
+        self.mapEdgeColor = '#999999'   # gray
+        self.edgeRed = '#ef0000'        # edgeRed
         self.currentScore = 0
-        self.AreaCenter = [0,0]                     # will get changed when the slither moves around
-        self.PixelConstant = gamePixelConstant         # will mutiply this in
-                                                        # the future when calculating movement speed.
+        self.AreaCenter = [0,0]                     # will get changed when the slither moves around will mutiply this
+        # in the future when calculating movement speed.
+        self.PixelConstant = gamePixelConstant
+        self.turning = None
 
     def __str__(self):
         pass
@@ -61,7 +62,8 @@ class core():
         else:
             self.gameAreaShape = 'square'
             self.area.penup()
-            self.area.setposition(-1/2*self.gameAreaDim, -1/2*self.gameAreaDim)     #goes to the left bottom corner of the game area.
+            self.area.setposition(-1/2*self.gameAreaDim, -1/2*self.gameAreaDim)     # goes to the left bottom corner of
+            #  the game area.
             self.area.setheading(0)
             self.area.pencolor(self.edgeRed)
             self.area.pensize(1)
@@ -96,42 +98,39 @@ class core():
             self.area.end_fill()
 
         else:
-           self.area.setposition(newX - 1/2*self.gameAreaDim, newY - 1/2*self.gameAreaDim)     #goes to the left bottom corner of the game area.
-           self.area.setheading(0)
+            self.area.setposition(newX - 1/2*self.gameAreaDim, newY - 1/2*self.gameAreaDim)     #goes to the left bottom corner of the game area.
+            self.area.setheading(0)
         #    self.area.pencolor(self.edgeRed)
         #    self.area.pensize(1)
         #    self.area.color(self.gameAreaColor)
-           self.area.begin_fill()
+            self.area.begin_fill()
 
-           self.area.forward(self.gameAreaDim)
-           self.area.setheading(90)
-           self.area.forward(self.gameAreaDim)
-           self.area.setheading(180)
-           self.area.forward(self.gameAreaDim)
-           self.area.setheading(270)
-           self.area.forward(self.gameAreaDim)
-           self.area.end_fill()
+            self.area.forward(self.gameAreaDim)
+            self.area.setheading(90)
+            self.area.forward(self.gameAreaDim)
+            self.area.setheading(180)
+            self.area.forward(self.gameAreaDim)
+            self.area.setheading(270)
+            self.area.forward(self.gameAreaDim)
+            self.area.end_fill()
         self.screen.update()
     def leftOn(self):
         self.turning = 'Left'
-        self.slither.setheading(self.slither.heading() + 2)
 
     def rightOn(self):
-        self.turing = 'Right'
-        self.slither.setheading(self.slither.heading() - 2)
+        self.turning = 'Right'
 
     def leftOff(self):
-        self.turning = None
-        pass
+        self.turning = 'None'
 
     def rightOff(self):
-        self.turning = None
-        pass
+        self.turning = 'None'
+
     def keyboardMovement(self):
-        self.screen.onkeypress(self.rightOn,"Right")
-        self.screen.onkeyrelease(self.rightOff,"Right")
-        self.screen.onkeyrelease(self.leftOff,"Left")
-        self.screen.onkeypress(self.leftOn,"Left")
+        self.screen.onkeypress(self.rightOn, "Right")
+        self.screen.onkeyrelease(self.rightOff, "Right")
+        self.screen.onkeypress(self.leftOn, "Left")
+        self.screen.onkeyrelease(self.leftOff, "Left")
         self.screen.onscreenclick(self.mouse.goto)
         self.mouse.ondrag(self.mouse.goto)
         self.screen.listen()
@@ -139,9 +138,9 @@ class core():
     def slitherBody(self):
         hD = self.slither.heading()
         radianHD= math.radians(hD)
-        moveDistance =  self.PixelConstant
-        vectorX = math.cos(radianHD)* moveDistance
-        vectorY = math.sin(radianHD)* moveDistance
+        moveDistance = self.PixelConstant
+        vectorX = math.cos(radianHD) * moveDistance
+        vectorY = math.sin(radianHD) * moveDistance
         self.AreaCenter = [self.AreaCenter[0] + vectorX, self.AreaCenter[1] + vectorY]
         self.updateGameArea()
 
@@ -166,6 +165,16 @@ class core():
         generated = '#%02X%02X%02X' % (r(),r(),r())
         return generated
 
+    def changeheading(self):
+        currentheading = self.slither.heading()
+        if self.turning == 'None':
+            return
+        elif self.turning == 'Right':
+            self.slither.setheading(currentheading - 3)
+            return
+        elif self.turning == 'Left':
+            self.slither.setheading(currentheading + 3)
+            return
 
     def cursorSet(self):
         print(self.mouse.pos())
@@ -203,6 +212,7 @@ class core():
     def gameLoop(self):
         self.slitherBody()
         self.cursorSet()
+        self.changeheading()
         self.screen.ontimer(self.gameLoop,self.ontimerSpeed)
 
 #

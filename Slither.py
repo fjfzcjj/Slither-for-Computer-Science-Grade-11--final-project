@@ -13,7 +13,7 @@ zoomMode = [1]
 gameSpeeds = [1,1.5,2,4,8,16,32,64,128,256,512,1024,2048,4096]
 
 
-game  = core(screensize, gameSpeeds)
+game = core(screensize, gameSpeeds)
 game.startGame()
 game.gameLoop()
 turtle.mainloop()
