@@ -139,3 +139,6 @@ $RECYCLE.BIN/
 *.lnk
 *.xml
 examples/circleFinder.py
+examples/useful.py
+examples
+.idea/Slither-for-Computer-Science-Grade-11--final-project.iml
