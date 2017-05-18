@@ -2,21 +2,19 @@ import math
 import turtle
 
 
-def _onmove(self, item, fun, num=1, add=None):
+def _onmove(self, item, fun):
     if fun is None:
-        self.cv.unbind(item, 'Motion' % num)
+        self.cv.unbind(item, '<Motion>', None)
     else:
         def eventfun(event):
-            try:
-                x, y = (self.cv.canvasx(event.x) / self.xscale,
-                        -self.cv.canvasy(event.y) / self.yscale)
-                fun(x, y)
-            except Exception:
-                pass
-        self.cv.bind(item, 'Motion' % num, eventfun, add)
+            x, y = (self.cv.canvasx(event.x) / self.xscale,
+                    -self.cv.canvasy(event.y) / self.yscale)
+            fun(x, y)
+        self.cv.bind(item, '<Motion>', eventfun)
 
-def onmove(self, fun, btn=1, add=None):
-    self.screen._onmove(self.turtle._item, fun, btn, add)
+
+def onmove(self, fun):
+    self.screen._onmove(self.turtle._item, fun)
 
 turtle._tg_turtle_functions.append('onmove')
 turtle.TurtleScreenBase._onmove = _onmove
@@ -164,7 +162,7 @@ far each move is:'))):
         self.screen.onkeypress(self.lefton, "Left")
         self.screen.onkeyrelease(self.leftoff, "Left")
         self.screen.onscreenclick(self.mouse.goto)
-        # self.mouse.onmove(self.mouse.goto)
+        self.mouse.onmove(self.mouse.goto)
         self.mouse.ondrag(self.mouse.goto)
         self.screen.listen()
 
@@ -192,15 +190,15 @@ far each move is:'))):
 
         print("Game speed set as: " + str(self.gameSpeeds[x-1]) + " !")
 
-    def changeheading(self):
-        currentheading = self.slither.heading()
+    def change_heading(self):
+        current_heading = self.slither.heading()
         if self.turning == 'None':
             return
         elif self.turning == 'Right':
-            self.slither.setheading(currentheading - 3)
+            self.slither.setheading(current_heading - 3)
             return
         elif self.turning == 'Left':
-            self.slither.setheading(currentheading + 3)
+            self.slither.setheading(current_heading + 3)
             return
 
     # def zoomChanger(self):
@@ -236,7 +234,7 @@ far each move is:'))):
 
     def game_loop(self):
         self.slither_body()
-        self.changeheading()
+        self.change_heading()
         self.screen.ontimer(self.game_loop, self.ontimerSpeed)
 
 #
