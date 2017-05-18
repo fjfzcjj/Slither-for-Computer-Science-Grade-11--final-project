@@ -2,33 +2,9 @@ import math
 import turtle
 
 
-def _onmove(self, item, fun):
-    if fun is None:
-        self.cv.unbind(item, '<Motion>', None)
-    else:
-        def eventfun(event):
-            x, y = (self.cv.canvasx(event.x) / self.xscale,
-                    -self.cv.canvasy(event.y) / self.yscale)
-            fun(x, y)
-        self.cv.bind(item, '<Motion>', eventfun)
-
-
-def onmove(self, fun):
-    self.screen._onmove(self.turtle._item, fun)
-
-turtle._tg_turtle_functions.append('onmove')
-turtle.TurtleScreenBase._onmove = _onmove
-turtle.RawTurtle.onmove = onmove
-# 
-# def color_generator(self):
-#     r = random.randint(0, 255)
-#     generated = '#%02X%02X%02X' % (r(), r(), r())
-#     return generated
-
-
 class Core:
-    def __init__(self, screensize, gamespeeds, gamepixelconstant=float(input('This Pixel CONSTANT will def how \
-far each move is:'))):
+    def __init__(self, screensize, gamespeeds, gamepixelconstant=float(input("This Pixel CONSTANT will def how \
+far each move is: "))):
         self.screensize = screensize
         self.gameSpeeds = gamespeeds
         self.gameAreaColor = '#000000'   # black
@@ -42,14 +18,14 @@ far each move is:'))):
         self.PixelConstant = gamepixelconstant
         self.gameAreaDim = None
         self.gameAreaShape = None
-        self.ontimerSpeed = None
+        self.ontimer_speed = None
         self.limiting_constant = None   # which defines how far each step of the slither is
                 
         self.turning = None
         self.slitherChain = []
         self.food_sum = None
         self.max_length = None
-        self.mouse = turtle.Turtle()
+        self.cursor = turtle.Turtle()
         self.screen = turtle.Screen()           # setup the screen and the drawing turtle
         self.area = turtle.Turtle()
         self.slither = turtle.Turtle()           # setup the slither
@@ -57,7 +33,7 @@ far each move is:'))):
     def __str__(self):
         pass
 
-    def gameareamaker(self, shape=input('Circle or square?\n'), dim=int(input('Dimension \
+    def gamearea_maker(self, shape=input('Circle or square?\n'), dim=int(input('Dimension \
     (radius or side length ): \n'))):
         """This function draws the game area.
             Defined by user, the first input defines the shape of the game area,
@@ -68,11 +44,11 @@ far each move is:'))):
 
         self.gameAreaDim = dim       # sort arguments
         self.gameAreaShape = shape
-        self.mouse.penup()
-        self.mouse.shape('circle')
-        self.mouse.color('white')
-        self.mouse.turtlesize(0.2)
-        self.mouse.st()
+        self.cursor.penup()
+        self.cursor.shape('circle')
+        self.cursor.color('white')
+        self.cursor.turtlesize(0.2)
+        self.cursor.st()
         self.slither.positions = [(0, 0)]
         self.screen.tracer(0, 0)
         self.screen.setup(self.screensize[0], self.screensize[1], 0, 0)
@@ -115,7 +91,7 @@ far each move is:'))):
         new_y = self.AreaCenter[1]
 
         self.area.clear()
-        self.mouse.clear()
+        self.cursor.clear()
         if self.gameAreaShape == 'circle':
             self.area.setposition(new_x, new_y - self.gameAreaDim)
             # self.area.pencolor(self.edgeRed)
@@ -144,26 +120,41 @@ far each move is:'))):
             self.area.end_fill()
         self.screen.update()
 
-    def lefton(self):
+    def left_on(self):
         self.turning = 'Left'
 
-    def righton(self):
+    def right_on(self):
         self.turning = 'Right'
 
-    def leftoff(self):
+    def left_off(self):
         self.turning = 'None'
 
-    def rightoff(self):
+    def right_off(self):
         self.turning = 'None'
+
+    # def onmove(self, fun, add=None):
+    #     if fun is None:
+    #         self.screen.cv.tag_unbind(self.cursor.turtle._item, '<Motion>')
+    #     else:
+    #         def eventfun(event):
+    #             x, y = (self.screen.cv.canvasx(event.x) / self.screen.xscale,
+    #                     -self.screen.cv.canvasy(event.y) / self.screen.yscale)
+    #             fun(x, y)
+    #         self.screen.cv.tag_bind(self.cursor.turtle._item, '<Motion>', eventfun, add)
+
+    # I was trying to make an onmove function according to turtle.py that moves the cursor around due to its motion.
+    # But it didn't work out. So I have to ditch this... I still learned a lot from trying to code this part though,
+    # just by reading all the documentations. ( how to use %string = % value, how to inherit class...,
+    # what's protected functions...)
 
     def keyboard_movement(self):
-        self.screen.onkeypress(self.righton, "Right")
-        self.screen.onkeyrelease(self.rightoff, "Right")
-        self.screen.onkeypress(self.lefton, "Left")
-        self.screen.onkeyrelease(self.leftoff, "Left")
-        self.screen.onscreenclick(self.mouse.goto)
-        self.mouse.onmove(self.mouse.goto)
-        self.mouse.ondrag(self.mouse.goto)
+        self.screen.onkeypress(self.right_on, "Right")
+        self.screen.onkeyrelease(self.right_off, "Right")
+        self.screen.onkeypress(self.left_on, "Left")
+        self.screen.onkeyrelease(self.left_off, "Left")
+        self.screen.onscreenclick(self.cursor.goto)
+        # self.onmove(self.cursor.goto)
+        self.cursor.ondrag(self.cursor.goto)
         self.screen.listen()
 
     def slither_body(self):
@@ -186,9 +177,8 @@ far each move is:'))):
             print(str(i+1) + '. ' + str(self.gameSpeeds[i]), end='\n')
 
         x = int(input("Your choice is ( NUMBER! ): "))
-        self.ontimerSpeed = int(800 / self.gameSpeeds[x-1])                    # will be in miliseconds
-
-        print("Game speed set as: " + str(self.gameSpeeds[x-1]) + " !")
+        self.ontimer_speed = int(800 / self.gameSpeeds[x-1])                    # will be in miliseconds
+        print("Refresh Rate set at: " + str(math.floor(1000/self.ontimer_speed)) + " FPS!")
 
     def change_heading(self):
         current_heading = self.slither.heading()
@@ -224,7 +214,7 @@ far each move is:'))):
 
     def start_game(self):
         self.game_speed_selector()
-        self.gameareamaker()
+        self.gamearea_maker()
         # self.screen.degrees(360)
 
         self.keyboard_movement()
@@ -235,7 +225,7 @@ far each move is:'))):
     def game_loop(self):
         self.slither_body()
         self.change_heading()
-        self.screen.ontimer(self.game_loop, self.ontimerSpeed)
+        self.screen.ontimer(self.game_loop, self.ontimer_speed)
 
 #
 # class slither():
