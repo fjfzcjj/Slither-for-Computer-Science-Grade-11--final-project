@@ -223,6 +223,7 @@ far each move is: "))):
         pass
 
     def game_loop(self):
+        print(self.turning)
         self.slither_body()
         self.change_heading()
         self.screen.ontimer(self.game_loop, self.ontimer_speed)
