@@ -97,12 +97,84 @@ def closingScreen():  # this is what happens when the player quits
 	screen.bye()
 	return
 
-def quantumTeleport(): # this is what happens if the player is much too small
+def game_area():			# make the game area
 	return
+
+def game_area_changer():			# change the size of game area
+	pass
+
+def color_generator():				# generate random hexa color
+	pass
+
+def snake_body():					# draw the snake body, according to its movement
+	return
+
+def change_fov():					# change the field of view of player
+	return
+
+def change_game_speed():			# change the speed of the game
+	return
+
+def snake_sprint():				# sense if a key/ button is pressed to make snake sprint
+	return
+
+def snake_movement():			# bind the snake movement with keys
+	return
+
+def make_scoreboard():			# prints a scoreboard on the screen
+	return
+
+def timer():						# print a timer on the screen
+	return
+
+def make_minimap():					# print a minimap on the screen
+	return
+
+def boss_assigner():			# assign boss to a random player
+	return
+
+def respawn_generator():				# automatically generate a spawn location
+	return
+
+
+def collision_detection():				# detect collision with other players
+	return
+
+def food_generator():						# randomly generate food
+	return
+
+def food_collision():					# check if player's snake eat the food or not
+	return
+
+def server_holder():				# set up a server
+	return
+
+def stats():					# print some stats from the gameplay
+	return
+
+
 #######################################################################
 
 ### MAIN PROGRAM ######################################################
 openingScreen()			# draw the opening screen
+snake_movement()		# bind the snake movement with keys
+game_area()				# make the game area
+game_area_changer()		# change the size of game area
+color_generator()		# generate random hexa color
+snake_body()			# draw the snake body, according to its movement
+change_fov()			# change the field of view of player
+change_game_speed()		# change the speed of the game
+snake_sprint()			# sense if a key/ button is pressed to make snake sprint
+make_scoreboard()		# prints a scoreboard on the screen
+timer()					# print a timer on the screen
+make_minimap()			# print a minimap on the screen
+boss_assigner()			# assign boss to a random player
+respawn_generator()		# automatically generate a spawn location
+collision_detection()	# detect collision with other players
+food_generator()	 	# randomly generate food
+food_collision()	 	# check if player's snake eat the food or not
+server_holder()			# set up a server
+stats()					# print some stats from the gameplay
 loop()					# start the game loop
 turtle.mainloop()		# keep window open until user closes it
 #######################################################################

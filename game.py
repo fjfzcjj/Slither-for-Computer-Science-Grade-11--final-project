@@ -20,7 +20,7 @@ far each move is: "))):
         self.gameAreaShape = None
         self.ontimer_speed = None
         self.limiting_constant = None   # which defines how far each step of the slither is
-                
+
         self.turning = None
         self.slitherChain = []
         self.food_sum = None
@@ -51,7 +51,7 @@ far each move is: "))):
         self.cursor.st()
         self.slither.positions = [(0, 0)]
         self.screen.tracer(0, 0)
-        self.screen.setup(self.screensize[0], self.screensize[1], 0, 0)
+        self.screen.setup(self.screensize[0], self.screensize[1], None, None)
         self.screen.bgcolor(self.mapEdgeColor)
         self.screen.title = 'David\'s slither game'
         self.area.ht()
@@ -147,6 +147,9 @@ far each move is: "))):
     # just by reading all the documentations. ( how to use %string = % value, how to inherit class...,
     # what's protected functions...)
 
+    def cursor_position_fetch(self):
+        
+
     def keyboard_movement(self):
         self.screen.onkeypress(self.right_on, "Right")
         self.screen.onkeyrelease(self.right_off, "Right")
@@ -185,10 +188,10 @@ far each move is: "))):
         if self.turning == 'None':
             return
         elif self.turning == 'Right':
-            self.slither.setheading(current_heading - 3)
+            self.slither.setheading(current_heading - 4)
             return
         elif self.turning == 'Left':
-            self.slither.setheading(current_heading + 3)
+            self.slither.setheading(current_heading + 4)
             return
 
     # def zoomChanger(self):
@@ -230,10 +233,10 @@ far each move is: "))):
 
 #
 # class slither():
-#     def __init__(self,name,screensize,zoomMode):
+#     def __init__(self,name,screensize,ZoomModes):
 #         self.name = name
 #         self.screensize = screensize
-#         self.zoomMode = zoomMode
+#         self.ZoomModes = ZoomModes
 #
 #     def __str__(self):
 #         return "Name is: " + self.name + ". \n"  + "The screensize is: " + str(screensize[0]) +"px by " + \
@@ -251,6 +254,6 @@ far each move is: "))):
 #         # setup the screen according to user setting
 #         turtle.setup(size[0],size[1],0,0)
 #
-# David = slither("David",screensize,zoomMode)
+# David = slither("David",screensize,ZoomModes)
 # David.makePlayer()
 # turtle.mainloop
