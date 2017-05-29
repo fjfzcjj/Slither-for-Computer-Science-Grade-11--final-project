@@ -1,11 +1,13 @@
 # skeleton version of jump.py
 # Created by Dr. C, May 20, 2017
+# Revised by David, May 29, 2017
 
 ### MODULES ###########################################################
 import turtle
 import random
 import math
-
+import ctypes
+from game import Core
 #######################################################################
 
 ### CONSTANTS #########################################################
@@ -17,6 +19,11 @@ WY = 0				# the screen top left corner y coordinate
 REFRESH = 1 		# the screen refresh time in milliseconds
 # PROGRAMMER CONSTANTS
 DOPRINT = True     # PRINT INFO TO SCREEN WHEN TRUE
+
+user32 = ctypes.windll.user32
+SCREENSIZE = user32.GetSystemMetrics(0), user32.GetSystemMetrics(1)			# this will send the screen size back
+ZOOMMODES = [1]																# define the ZOOMMODES
+GAMESPEEDS = [1, 1.5, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096]	# define different game speeds
 #######################################################################
 
 ### OBJECTS ###########################################################
@@ -150,13 +157,14 @@ def food_collision():					# check if player's snake eat the food or not
 def server_holder():				# set up a server
 	return
 
-def stats():					# print some stats from the gameplay
+def stats(): # print some stats from the gameplay
 	return
 
 
 #######################################################################
 
 ### MAIN PROGRAM ######################################################
+game = Core([WSIZEX, WSIZEY], GAMESPEEDS)                 # define the game object using the imported module game
 openingScreen()			# draw the opening screen
 snake_movement()		# bind the snake movement with keys
 game_area()				# make the game area
@@ -177,5 +185,7 @@ food_collision()	 	# check if player's snake eat the food or not
 server_holder()			# set up a server
 stats()					# print some stats from the gameplay
 loop()					# start the game loop
+game.start_game()       # start the game using a method in game
+game.game_loop()        # loop the game over and over
 turtle.mainloop()		# keep window open until user closes it
 #######################################################################
