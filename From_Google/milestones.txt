@@ -1,8 +1,8 @@
-milestones:
+Milestones:
+
 Unfinished:
 
 GameMenu
-
 gameAreaChanger
 colorGenrerator
 skinColor
@@ -28,4 +28,5 @@ exit
 
 
 Finished:
-gameArea - 2017.5. 
+gameArea - 2017.5.9
+snakeMovement - 2017.5.17
