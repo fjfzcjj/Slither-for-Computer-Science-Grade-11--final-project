@@ -1,7 +1,6 @@
 import math
 import turtle
 
-
 class Core:
     def __init__(self, screensize, gamespeeds, gamepixelconstant=float(input("This Pixel CONSTANT will def how \
 far each move is: "))):
@@ -147,8 +146,8 @@ far each move is: "))):
     # just by reading all the documentations. ( how to use %string = % value, how to inherit class...,
     # what's protected functions...)
 
-    def cursor_position_fetch(self):
-        
+    # def cursor_position_fetch(self):
+    #
 
     def keyboard_movement(self):
         self.screen.onkeypress(self.right_on, "Right")
