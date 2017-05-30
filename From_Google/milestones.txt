@@ -30,3 +30,4 @@ exit
 Finished:
 gameArea - 2017.5.9
 snakeMovement - 2017.5.17
+boundary Collision detection  - 2017.5.30
